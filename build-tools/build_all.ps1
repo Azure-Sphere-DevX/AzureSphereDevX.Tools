@@ -1,3 +1,5 @@
+# Project discovery assumes there is a cmake/azsphere_config.cmake folder/file for the high-level and real-time projects to be built 
+
 Write-Output "`n`nBuild all test tool for AzureSphereDevX examples`n`n"
 
 if ($IsWindows) {
@@ -137,19 +139,20 @@ $StartTime = $(get-date)
 
 Remove-Item -Recurse -Force -ErrorAction SilentlyContinue -path ./build
 
-$files = Get-ChildItem -Recurse -Depth 3 -Filter app_manifest.json | Sort-Object
+# Project discovery assumes there is a cmake/azsphere_config.cmake folder/file for the high-level and real-time projects to be built 
+$files = Get-ChildItem -Recurse -Filter azsphere_config.cmake | Split-Path -Parent | Split-Path -Parent | Sort-Object
 
 # Write-Output "Building $files.count projects"
 foreach ($file in $files) {
-    Write-Output ( -join ("BUILDING:", $file.DirectoryName))
+    Write-Output ( -join ("BUILDING:", $file))
 }
 
 Write-Output "`n`nBuild all process starting.`n"
 
 
 foreach ($file in $files) {
-    Write-Output ( -join ("BUILDING:", $file.DirectoryName, "`n"))
-    build_application $file.DirectoryName
+    Write-Output ( -join ("BUILDING:", $file, "`n"))
+    build_application $file
 }
 
 Remove-Item -Recurse -Force -ErrorAction SilentlyContinue -path ./build
