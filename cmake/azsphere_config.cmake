@@ -1,14 +1,19 @@
-# Auto generate azsphere_configure_tools and azsphere_configure_api
-function(auto_generate_azsphere_config)
+function(auto_generate_tools_revision)
     # Generate the Azure Sphere tools version from the azsphere show-version SDK tool
     execute_process(COMMAND azsphere show-version OUTPUT_VARIABLE SDK_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     message(STATUS "Azure Sphere SDK Version: ${SDK_VERSION}")
     azsphere_configure_tools(TOOLS_REVISION ${SDK_VERSION})
+endfunction()
 
-    if (LINUX)
-        FILE(GLOB children "/opt/azurespheresdk/Sysroots")
-    else()
-        # Generate the Azure Sphere latest sysroot number
+# Auto generate azsphere_configure_tools and azsphere_configure_api
+function(auto_generate_azsphere_config)
+
+    auto_generate_tools_revision()
+
+    # Generate the Azure Sphere latest sysroot number
+    if (EXISTS "/opt/azurespheresdk/Sysroots/")
+        FILE(GLOB children "/opt/azurespheresdk/Sysroots/*")
+    else()        
         FILE(GLOB children "C:/Program Files (x86)/Microsoft Azure Sphere SDK/Sysroots/*")
     endif()
 
