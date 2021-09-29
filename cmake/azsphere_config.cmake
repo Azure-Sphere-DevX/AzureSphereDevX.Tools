@@ -32,7 +32,7 @@ function(auto_generate_azsphere_config)
     MATH(EXPR len "${len}-1")
     list(GET child ${len} sysroot)
 
-    message(STATUS "latest sysroot: ${sysroot}")
+    message(STATUS "Azure Sphere latest sysroot: ${sysroot}")
     azsphere_configure_api(TARGET_API_SET ${sysroot})    
 
 endfunction()
