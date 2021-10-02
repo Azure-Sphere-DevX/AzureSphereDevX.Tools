@@ -7,7 +7,7 @@ if ($IsWindows) {
 }
 else {
     if ($IsLinux) {
-        $gnufolder = (Get-ChildItem /opt | Where-Object { $_.PSIsContainer -eq $true -and $_.Name -match "gcc-arm-none" })
+        $gnufolder = Get-ChildItem /opt/gcc-arm-none* -Directory
         $gnupath = Join-Path -Path $gnufolder -ChildPath "bin"
     }
 }
