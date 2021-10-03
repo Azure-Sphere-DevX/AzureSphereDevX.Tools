@@ -1,6 +1,11 @@
 function(auto_generate_tools_revision)
     # Generate the Azure Sphere tools version from the azsphere show-version SDK tool
     execute_process(COMMAND azsphere show-version OUTPUT_VARIABLE SDK_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+    
+    if(SDK_VERSION STREQUAL "")
+        message(FATAL_ERROR "ERROR: azsphere cli not found. Have you installed the Azure Sphere SDK with CLI Version 2?")
+    endif()
+    
     message(STATUS "Azure Sphere SDK Version: ${SDK_VERSION}")
     azsphere_configure_tools(TOOLS_REVISION ${SDK_VERSION})
 endfunction()
