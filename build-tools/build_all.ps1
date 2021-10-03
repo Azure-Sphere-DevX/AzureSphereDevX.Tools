@@ -8,7 +8,17 @@ if ($IsWindows) {
 else {
     if ($IsLinux) {
         $gnufolder = Get-ChildItem /opt/gcc-arm-none* -Directory
-        $gnupath = Join-Path -Path $gnufolder -ChildPath "bin"
+        if ($gnufolder.count -eq 1) {
+            $gnupath = Join-Path -Path $gnufolder -ChildPath "bin"
+        }
+        else {
+            Write-Output("Error: GNU Arm Embedded Toolchain not found in the /opt folder")
+            Write-Output("Browse: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads")
+            Write-Output("Download: gcc-arm-none-eabi-<version>-x86_64-linux.tar.bz2")
+            Write-Output("Install: sudo tar -xjvf gcc-arm-none-eabi-<version>-x86_64-linux.tar.bz2 -C /opt")
+            Write-Output("Path: nano ~/.bashrc, at end of file add export PATH=`$PATH:/opt/gcc-arm-none-eabi-<version>/bin")
+            exit 1            
+        }
     }
 }
 
