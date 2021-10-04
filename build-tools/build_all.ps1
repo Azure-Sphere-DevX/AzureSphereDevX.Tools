@@ -12,6 +12,7 @@ if ($IsWindows) {
         Write-Output("Browse: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads")
         Write-Output("Download: gcc-arm-none-eabi-<version>-win32.exe")
         Write-Output("Install: install the gcc-arm-none-eabi-<version>-win32.exe, accepting the defaults.")
+        exit 1
     }
 }
 else {
