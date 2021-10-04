@@ -3,7 +3,16 @@
 Write-Output "`n`nBuild all test tool for AzureSphereDevX examples`n`n"
 
 if ($IsWindows) {
-    $gnupath = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Linux\gcc_arm\bin"
+    $files = Get-ChildItem "C:\Program Files (x86)" -Recurse -Filter arm-none-eabi-gcc-*.exe | Sort-Object
+    if ($files.count -gt 0){
+        $gnupath = $files[0].Directory.FullName
+    }
+    else {
+        Write-Output("Error: GNU Arm Embedded Toolchain not found in the C:\Program Files (x86) folder")
+        Write-Output("Browse: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads")
+        Write-Output("Download: gcc-arm-none-eabi-<version>-win32.exe")
+        Write-Output("Install: install the gcc-arm-none-eabi-<version>-win32.exe, accepting the defaults.")
+    }
 }
 else {
     if ($IsLinux) {
