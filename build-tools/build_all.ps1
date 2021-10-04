@@ -3,7 +3,7 @@
 Write-Output "`n`nBuild all test tool for AzureSphereDevX examples`n`n"
 
 if ($IsWindows) {
-    $files = Get-ChildItem "C:\Program Files (x86)" -Recurse -Filter arm-none-eabi-gcc-*.exe | Sort-Object
+    $files = Get-ChildItem "C:\Program Files (x86)" -Recurse -Filter arm-none-eabi-gcc-*.exe -ErrorAction SilentlyContinue | Sort-Object
     if ($files.count -gt 0){
         $gnupath = $files[0].Directory.FullName
     }
