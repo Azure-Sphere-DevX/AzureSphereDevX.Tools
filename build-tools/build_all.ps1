@@ -3,7 +3,7 @@
 Write-Output "`n`nBuild all test tool for AzureSphereDevX examples`n`n"
 
 if ($IsWindows) {
-    $files = Get-ChildItem "C:\Program Files (x86)" -Recurse -Filter arm-none-eabi-gcc-*.exe | Sort-Object
+    $files = Get-ChildItem "C:\Program Files (x86)" -Recurse -Filter arm-none-eabi-gcc-*.exe -ErrorAction SilentlyContinue | Sort-Object
     if ($files.count -gt 0){
         $gnupath = $files[0].Directory.FullName
     }
@@ -12,6 +12,7 @@ if ($IsWindows) {
         Write-Output("Browse: https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads")
         Write-Output("Download: gcc-arm-none-eabi-<version>-win32.exe")
         Write-Output("Install: install the gcc-arm-none-eabi-<version>-win32.exe, accepting the defaults.")
+        exit 1
     }
 }
 else {
