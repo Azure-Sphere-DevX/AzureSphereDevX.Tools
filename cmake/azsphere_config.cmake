@@ -28,25 +28,23 @@ function(auto_generate_azsphere_config)
         message(FATAL_ERROR "No Sysroots found in the default location. Check you have installed the Azure Sphere SDK")
     endif()
 
-    set(highest_api_version 0)
+    set(latest_api_version 0)
     
     foreach(child ${children})
-        string(REPLACE "/" " " child ${child})
-        separate_arguments(child)
+        string(REPLACE "/" ";" child ${child})
 
         # grab the api version number - it's the last element
         list(LENGTH child len)
         MATH(EXPR len "${len}-1")
         list(GET child ${len} api_version)
 
-        # Is it numeric
-        if (api_version MATCHES "^[0-9]+$" AND api_version GREATER highest_api_version)
-            set(highest_api_version ${api_version})
-            # message(STATUS ${highest_api_version})
+        # Is new api version numeric and greater than latest api version then update latest api version with new version
+        if (api_version MATCHES "^[0-9]+$" AND api_version GREATER latest_api_version)
+            set(latest_api_version ${api_version})
         endif()
     endforeach()
 
-    message(STATUS "Azure Sphere latest sysroot: ${highest_api_version}")
-    azsphere_configure_api(TARGET_API_SET ${highest_api_version})    
+    message(STATUS "Azure Sphere latest sysroot: ${latest_api_version}")
+    azsphere_configure_api(TARGET_API_SET ${latest_api_version})    
 
 endfunction()
